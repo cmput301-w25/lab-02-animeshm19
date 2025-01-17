@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import androidx.activity.EdgeToEdge;
@@ -21,7 +22,8 @@ public class MainActivity extends AppCompatActivity {
     ListView cityList;
     ArrayAdapter<String> cityAdapter;
     ArrayList<String> dataList;
-    com.google.android.material.textfield.TextInputLayout TextField;
+    EditText inputField; // To get user input
+    int selectedIndex = -1; // To track the selected city index
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main); // without this line there is no list. it tells you the layout specified
 
         cityList = findViewById(R.id.city_list); // R holds all the elements that I can refer to like colour
+
+        inputField = findViewById(R.id.input_search);
         String[] cities = {"Edmonton", "Vancouver", "Moscow", "Sydney", "Berlin", "Vienna", "Tokyo", "Beijing", "Osaka", "New Delhi"};
         dataList = new ArrayList<>(); // <> we can specify string but it can automatically detect too
         dataList.addAll(Arrays.asList(cities)); // as list converts the array to list
@@ -39,20 +43,21 @@ public class MainActivity extends AppCompatActivity {
         cityList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                selectedIndex = position;
             }
         });
 
 
-        com.google.android.material.textfield.TextInputLayout TextField = findViewById(R.id.input_search);
-
         Button addButton = findViewById(R.id.add_button);
-
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dataList.add("New City " + (dataList.size() + 1));
-                cityAdapter.notifyDataSetChanged();
+                String cityName = inputField.getText().toString().trim();
+                if (!cityName.isEmpty()) {
+                    dataList.add(cityName);
+                    cityAdapter.notifyDataSetChanged();
+                    inputField.setText(""); // Clear the input field
+                }
             }
         });
 
@@ -61,9 +66,10 @@ public class MainActivity extends AppCompatActivity {
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!dataList.isEmpty()) {
-                    dataList.remove(dataList.size() - 1);
-                    cityAdapter.notifyDataSetChanged(); // Updating the ListView
+                if (selectedIndex >= 0 && selectedIndex < dataList.size()) {
+                    dataList.remove(selectedIndex);
+                    cityAdapter.notifyDataSetChanged();
+                    selectedIndex = -1; // Reset selection
                 }
             }
         });

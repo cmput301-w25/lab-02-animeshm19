@@ -40,6 +40,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+
     <ListView
         android:id="@+id/city_list"
         android:layout_width="414dp"
@@ -51,7 +52,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.496">
+        app:layout_constraintVertical_bias="0.496" />
 
-    </ListView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
