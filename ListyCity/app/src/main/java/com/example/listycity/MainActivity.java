@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayAdapter<String> cityAdapter;
     ArrayList<String> dataList;
     EditText inputField; // To get user input
-    int selectedIndex = -1; // To track the selected city index
+    int selectedIndex = -1; 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
                 if (!cityName.isEmpty()) {
                     dataList.add(cityName);
                     cityAdapter.notifyDataSetChanged();
-                    inputField.setText(""); // Clear the input field
+                    inputField.setText(""); 
                 }
             }
         });
@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
                 if (selectedIndex >= 0 && selectedIndex < dataList.size()) {
                     dataList.remove(selectedIndex);
                     cityAdapter.notifyDataSetChanged();
-                    selectedIndex = -1; // Reset selection
+                    selectedIndex = -1;
                 }
             }
         });
